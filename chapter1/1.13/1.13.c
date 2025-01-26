@@ -17,8 +17,6 @@ int main() {
   // track words by length
   while ((c = getchar()) != EOF) {
     if (c != ' ' && c != '\n' && c != '\t') {
-
-
       // we are inside the current word
       ++current_word_length;
       state = IN;
@@ -48,22 +46,41 @@ int main() {
         initialized = 1;
       }
       if (word_count_by_length[i] > max_word_count) {
+        // The most frequent length (rename to most_frequent-length?)
         max_word_count = word_count_by_length[i];
       }
     }
   }
 
-  // TODO: print the histogram horizontally
-  // we have the length of the inner array -> h_end - h_start
-  // and we have the length of the outer array -> max_word_count
-
-  // print the histogram
-  for (i = h_start; i <= h_end; i++) {
-    printf("[%d]: ", i + 1);
-    for (j = 0; j < word_count_by_length[i]; j++) {
-      printf("#");
+  // print the y-axis
+  for (i = max_word_count; i > 0; i--) {
+    if (i > 9) {
+      printf("%d | ", i);
+    } else {
+      printf("0%d | ", i);
     }
+    
+    for (j = h_start; j <= h_end; j++) {
+      if (word_count_by_length[j] >= i) {
+        printf("#  ");
+      } else {
+        printf("   ");
+      }
+      
+      if (i > 10) {
+        // add extra padding wo the x-axis is alligned
+        printf(" ");
+      }
+    }
+
     printf("\n");
+  }
+
+
+  // print the x-axis
+  printf("F/L  ");
+  for (i = h_start; i <= h_end; i++) {
+    printf("0%d ", i + 1);
   }
 
   return 0;
