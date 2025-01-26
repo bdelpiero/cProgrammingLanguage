@@ -1,0 +1,2 @@
+This is a histogram example for word lengths
+
